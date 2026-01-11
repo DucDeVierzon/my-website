@@ -2,7 +2,8 @@ const CACHE_NAME = "sky-hopper-v3";
 const ASSETS = [
   "./",
   "./index.html",
-  "./manifest.webmanifest"
+  "./manifest.webmanifest",
+  "./sw.js"
 ];
 
 self.addEventListener("install", (event) => {
