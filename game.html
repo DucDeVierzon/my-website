@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0b1d3a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Penguin Jump">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <title>Penguin Jump</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: radial-gradient(circle at top, #f5fbff 0%, #d7ecff 35%, #9cc7f1 70%, #5b9bdc 100%);
+        color: #0b1020;
+        min-height: 100vh;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        overflow: hidden;
+        text-rendering: optimizeLegibility;
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      .wrap {
+        display: grid;
+        grid-template-rows: auto 1fr auto auto;
+        width: min(100%, 560px);
+        height: 100vh;
+        padding: 20px 18px 24px;
+        gap: 16px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 4px 2px;
+      }
+
+      h1 {
+        font-size: 1.35rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .pill {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        box-shadow: 0 8px 16px rgba(24, 41, 87, 0.15);
+      }
+
+      .game-panel {
+        position: relative;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.55));
+        border-radius: 28px;
+        box-shadow: 0 24px 50px rgba(24, 41, 87, 0.25);
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        padding: 24px;
+        gap: 10px;
+      }
+
+      .overlay.hidden {
+        display: none;
+      }
+
+      .overlay h2 {
+        font-size: 1.5rem;
+        margin-bottom: 4px;
+      }
+
+      .overlay p {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        color: rgba(11, 16, 32, 0.75);
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 12px 20px;
+        font-weight: 700;
+        background: #0b1d3a;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(27, 31, 59, 0.2);
+        touch-action: manipulation;
+      }
+
+      .hint {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: rgba(11, 16, 32, 0.65);
+      }
+
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .control-btn {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.85);
+        color: #0b1d3a;
+        border-radius: 18px;
+        padding: 14px 0;
+        font-weight: 700;
+        border: 1px solid rgba(27, 31, 59, 0.1);
+        box-shadow: 0 12px 22px rgba(24, 41, 87, 0.15);
+      }
+
+      .meta {
+        font-size: 0.82rem;
+        text-align: center;
+        color: rgba(11, 16, 32, 0.65);
+      }
+
+      .meta a {
+        color: inherit;
+        font-weight: 600;
+      }
+
+      @media (min-width: 600px) {
+        .wrap {
+          height: 100vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Penguin Jump</h1>
+        <div class="pill" id="score">Score 0 · Best 0 · v4</div>
+      </header>
+
+      <section class="game-panel" aria-label="Penguin Jump game">
+        <canvas id="game" width="360" height="520"></canvas>
+        <div class="overlay" id="overlay">
+          <div>
+            <h2>Slide, hop, and soar!</h2>
+            <p>Tap Start, then tilt your device or use the on-screen buttons to guide the penguin.</p>
+            <p class="hint" id="motion-hint">We will ask for motion access the first time you play.</p>
+            <button id="start">Start game</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="controls" aria-label="Movement controls">
+        <button class="control-btn" id="left">⬅︎ Hold Left</button>
+        <button class="control-btn" id="right">Hold Right</button>
+      </div>
+
+      <p class="meta">
+        Return to the <a href="./index.html">home page</a> when you want another destination.
+      </p>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const scoreEl = document.getElementById("score");
+      const overlay = document.getElementById("overlay");
+      const startBtn = document.getElementById("start");
+      const leftBtn = document.getElementById("left");
+      const rightBtn = document.getElementById("right");
+      const motionHint = document.getElementById("motion-hint");
+
+      const state = {
+        width: canvas.width,
+        height: canvas.height,
+        player: { x: 0, y: 0, w: 34, h: 42, vx: 0, vy: 0 },
+        platforms: [],
+        gravity: 0.35,
+        jump: -8.6,
+        speed: 3.4,
+        score: 0,
+        best: 0,
+        running: false,
+        input: { left: false, right: false }
+      };
+
+      const resizeCanvas = () => {
+        const panel = canvas.parentElement.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = panel.width * ratio;
+        canvas.height = panel.height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        state.width = panel.width;
+        state.height = panel.height;
+      };
+
+      const makePlatform = (y) => {
+        const width = 80 + Math.random() * 50;
+        return {
+          x: Math.random() * (state.width - width),
+          y,
+          w: width,
+          h: 14
+        };
+      };
+
+      const resetGame = () => {
+        state.player.x = state.width / 2 - state.player.w / 2;
+        state.player.y = state.height - 90;
+        state.player.vx = 0;
+        state.player.vy = state.jump;
+        state.score = 0;
+        state.platforms = [];
+        const spacing = 90;
+        for (let y = state.height - 40; y > -state.height; y -= spacing) {
+          state.platforms.push(makePlatform(y));
+        }
+      };
+
+      const updateScore = () => {
+        scoreEl.textContent = `Score ${Math.floor(state.score)} · Best ${state.best} · v4`;
+      };
+
+      const applyInput = () => {
+        let direction = 0;
+        if (state.input.left) direction -= 1;
+        if (state.input.right) direction += 1;
+        state.player.vx = direction * state.speed;
+      };
+
+      const updatePlatforms = () => {
+        const topMost = Math.min(...state.platforms.map((p) => p.y));
+        state.platforms = state.platforms.filter((p) => p.y < state.height + 100);
+        while (state.platforms.length < 12) {
+          state.platforms.push(makePlatform(topMost - 90 - Math.random() * 20));
+        }
+      };
+
+      const update = () => {
+        applyInput();
+        const player = state.player;
+        player.vy += state.gravity;
+        player.x += player.vx;
+        player.y += player.vy;
+
+        if (player.x + player.w < 0) {
+          player.x = state.width;
+        } else if (player.x > state.width) {
+          player.x = -player.w;
+        }
+
+        if (player.vy > 0) {
+          for (const platform of state.platforms) {
+            const withinX = player.x + player.w > platform.x && player.x < platform.x + platform.w;
+            const touching = player.y + player.h >= platform.y &&
+              player.y + player.h <= platform.y + platform.h + 6;
+            if (withinX && touching) {
+              player.vy = state.jump;
+              break;
+            }
+          }
+        }
+
+        const cameraLine = state.height * 0.38;
+        if (player.y < cameraLine) {
+          const diff = cameraLine - player.y;
+          player.y = cameraLine;
+          state.platforms.forEach((platform) => {
+            platform.y += diff;
+          });
+          state.score += diff;
+        }
+
+        updatePlatforms();
+
+        if (player.y > state.height + 60) {
+          state.running = false;
+          state.best = Math.max(state.best, Math.floor(state.score));
+          overlay.classList.remove("hidden");
+          updateScore();
+        }
+      };
+
+      const drawPenguin = (x, y, w, h) => {
+        const centerX = x + w / 2;
+        const centerY = y + h / 2;
+        ctx.fillStyle = "#0b1d3a";
+        ctx.beginPath();
+        ctx.ellipse(centerX, centerY, w / 2, h / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.ellipse(centerX, centerY + 2, w / 3, h / 2.4, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ffb347";
+        ctx.beginPath();
+        ctx.moveTo(centerX - 5, y + h * 0.48);
+        ctx.lineTo(centerX + 5, y + h * 0.48);
+        ctx.lineTo(centerX, y + h * 0.62);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(centerX - 6, y + h * 0.3, 4, 0, Math.PI * 2);
+        ctx.arc(centerX + 6, y + h * 0.3, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#0b1d3a";
+        ctx.beginPath();
+        ctx.arc(centerX - 6, y + h * 0.3, 2, 0, Math.PI * 2);
+        ctx.arc(centerX + 6, y + h * 0.3, 2, 0, Math.PI * 2);
+        ctx.fill();
+      };
+
+      const draw = () => {
+        ctx.clearRect(0, 0, state.width, state.height);
+
+        const sky = ctx.createLinearGradient(0, 0, 0, state.height);
+        sky.addColorStop(0, "rgba(241, 250, 255, 0.9)");
+        sky.addColorStop(1, "rgba(179, 214, 250, 0.9)");
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, state.width, state.height);
+
+        ctx.fillStyle = "#7ec6ff";
+        ctx.shadowColor = "rgba(90, 140, 200, 0.3)";
+        ctx.shadowBlur = 6;
+        for (const platform of state.platforms) {
+          ctx.fillRect(platform.x, platform.y, platform.w, platform.h);
+        }
+        ctx.shadowBlur = 0;
+
+        drawPenguin(state.player.x, state.player.y, state.player.w, state.player.h);
+      };
+
+      const loop = () => {
+        if (state.running) {
+          update();
+          draw();
+        }
+        requestAnimationFrame(loop);
+      };
+
+      const enableMotionControls = async () => {
+        if (!("DeviceOrientationEvent" in window)) {
+          motionHint.textContent = "Motion controls are not supported on this device.";
+          return;
+        }
+
+        if (typeof DeviceOrientationEvent.requestPermission === "function") {
+          try {
+            const result = await DeviceOrientationEvent.requestPermission();
+            if (result !== "granted") {
+              motionHint.textContent = "Motion access denied. Use on-screen buttons instead.";
+            } else {
+              motionHint.textContent = "Tilt control enabled. Keep the device steady!";
+            }
+          } catch (error) {
+            motionHint.textContent = "Motion access unavailable. Use on-screen buttons instead.";
+          }
+        } else {
+          motionHint.textContent = "Tilt control enabled. Keep the device steady!";
+        }
+      };
+
+      const startGame = async () => {
+        resizeCanvas();
+        resetGame();
+        updateScore();
+        overlay.classList.add("hidden");
+        state.running = true;
+        await enableMotionControls();
+      };
+
+      const registerControls = () => {
+        const setInput = (side, active) => {
+          state.input[side] = active;
+        };
+
+        leftBtn.addEventListener("pointerdown", () => setInput("left", true));
+        leftBtn.addEventListener("pointerup", () => setInput("left", false));
+        leftBtn.addEventListener("pointerleave", () => setInput("left", false));
+        rightBtn.addEventListener("pointerdown", () => setInput("right", true));
+        rightBtn.addEventListener("pointerup", () => setInput("right", false));
+        rightBtn.addEventListener("pointerleave", () => setInput("right", false));
+
+        window.addEventListener("deviceorientation", (event) => {
+          if (!state.running) return;
+          const gamma = Math.max(-25, Math.min(25, event.gamma || 0));
+          state.input.left = gamma < -6;
+          state.input.right = gamma > 6;
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowLeft") setInput("left", true);
+          if (event.key === "ArrowRight") setInput("right", true);
+        });
+        window.addEventListener("keyup", (event) => {
+          if (event.key === "ArrowLeft") setInput("left", false);
+          if (event.key === "ArrowRight") setInput("right", false);
+        });
+      };
+
+      startBtn.addEventListener("click", startGame);
+      window.addEventListener("resize", resizeCanvas);
+
+      registerControls();
+      resizeCanvas();
+      resetGame();
+      updateScore();
+      draw();
+      loop();
+
+      window.addEventListener(
+        "dblclick",
+        (event) => {
+          event.preventDefault();
+        },
+        { passive: false }
+      );
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js");
+        });
+      }
+    </script>
+  </body>
+</html>

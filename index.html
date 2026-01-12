@@ -2,14 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#1b1f3b">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Sky Hopper">
-    <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAYAAADnRuK4AAAChUlEQVR4nO3bQQ6DMAwEwXf//1uRrC6KpOqQ1Z1d1Qgi7gG3G9yG8c3H0gH7F0q9pQIAAAAAAAAAAACAVxq6d1+Z2C8lGd7B4+5cT9z0S5Yj0HnP+g9S1vHf0H6S0d8OZKc2x9jW6RZ3wJz7xg0c6Rr0+VZKf9aqb9Xq8QjQ5mC3mD5iW1o2t4h4vWqv1mUq1N7q7rI1m4wN6g7q2Xb9uP8C2q8m2x4q1iT7j7r6m8m9mT8A1vZ5w2Wv1o8QdFivf3s0cR3rA3y9FzD6iE9C+1T8k9yq8f2n1bC0o5VQXzv5+F7m5H0kq2W8p2s9w2Z7o7GfR5H6Yf4E7o2wM3q5d3o9t9t9+4iG6o6S2F4W4r2o9R8d7o5d2O8N9M9g7p0JwI2H6u6r7b6X7X+0F3u9xq9H6Q2q9B8M+Z5M6A7y+f5b8b8r7R9p8D5L8U+S+2u+V/8Bv1i1d+v8T1G7o4l6T2e1o8n8x3f6g7m6b7b6a8h6c7e6b8g7R8f7s6p7c6l7u7f7x7W8Y8b7e8j8k8w8f8Gf8Y8c8b8f8F+2mG2Rk2wT6nX0v6w+X1n8jW2o0d7pYb6uQ5s3tE7O2s+J6o/Okf8p3nFQY1Qf9Wv3d2f+3f0o9B9G+5QkAAAAAAAAAAAAgF9vA/3u6z5d3wAAAABJRU5ErkJggg==">
-    <title>Sky Hopper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0c1633">
+    <title>Penguin Hub</title>
     <style>
       :root {
         color-scheme: light;
@@ -23,26 +18,19 @@
       }
 
       body {
-        background: radial-gradient(circle at top, #fef7ff 0%, #e1efff 35%, #a8d6ff 70%, #74b2ff 100%);
-        color: #0b1020;
         min-height: 100vh;
+        background: radial-gradient(circle at top, #eef4ff 0%, #cde6ff 40%, #8bbef5 100%);
+        color: #0b1020;
         display: flex;
-        align-items: stretch;
         justify-content: center;
-        overflow: hidden;
-        text-rendering: optimizeLegibility;
-        touch-action: manipulation;
-        user-select: none;
-        -webkit-user-select: none;
       }
 
-      .wrap {
-        display: grid;
-        grid-template-rows: auto 1fr auto auto;
-        width: min(100%, 560px);
-        height: 100vh;
-        padding: 20px 18px 24px;
-        gap: 16px;
+      .page {
+        width: min(100%, 980px);
+        padding: 32px 20px 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
       }
 
       header {
@@ -50,375 +38,135 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        padding: 4px 2px;
+      }
+
+      .badge {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        box-shadow: 0 10px 20px rgba(11, 16, 32, 0.15);
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
       }
 
       h1 {
-        font-size: 1.4rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
+        font-size: clamp(2rem, 4vw, 3.1rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
       }
 
-      .pill {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 8px 14px;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        box-shadow: 0 8px 16px rgba(24, 41, 87, 0.15);
+      .hero p {
+        font-size: 1.05rem;
+        max-width: 620px;
+        color: rgba(11, 16, 32, 0.7);
       }
 
-      .game-panel {
-        position: relative;
-        background: linear-gradient(160deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.5));
-        border-radius: 28px;
-        box-shadow: 0 24px 50px rgba(24, 41, 87, 0.25);
-        overflow: hidden;
-        display: grid;
-        place-items: center;
-        border: 1px solid rgba(255, 255, 255, 0.7);
-      }
-
-      canvas {
-        width: 100%;
-        height: 100%;
-        display: block;
-        touch-action: none;
-      }
-
-      .overlay {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        background: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(10px);
-        text-align: center;
-        padding: 24px;
-        gap: 10px;
-      }
-
-      .overlay.hidden {
-        display: none;
-      }
-
-      .overlay h2 {
-        font-size: 1.5rem;
-        margin-bottom: 4px;
-      }
-
-      .overlay p {
-        font-size: 0.95rem;
-        margin-bottom: 8px;
-        color: rgba(11, 16, 32, 0.75);
-      }
-
-      button {
-        border: none;
-        border-radius: 999px;
-        padding: 12px 20px;
-        font-weight: 700;
-        background: #1b1f3b;
-        color: white;
-        cursor: pointer;
-        box-shadow: 0 10px 20px rgba(27, 31, 59, 0.2);
-        touch-action: manipulation;
-      }
-
-      .hint {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: rgba(11, 16, 32, 0.65);
-      }
-
-      .controls {
+      .cta-row {
         display: flex;
-        justify-content: space-between;
+        flex-wrap: wrap;
         gap: 12px;
       }
 
-      .control-btn {
-        flex: 1;
-        background: rgba(255, 255, 255, 0.85);
-        color: #1b1f3b;
-        border-radius: 18px;
-        padding: 14px 0;
+      .cta {
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 999px;
         font-weight: 700;
-        border: 1px solid rgba(27, 31, 59, 0.1);
-        box-shadow: 0 12px 22px rgba(24, 41, 87, 0.15);
+        background: #0c1633;
+        color: #fff;
+        box-shadow: 0 14px 30px rgba(12, 22, 51, 0.2);
       }
 
-      .meta {
-        font-size: 0.82rem;
-        text-align: center;
+      .cta.secondary {
+        background: rgba(255, 255, 255, 0.85);
+        color: #0c1633;
+        border: 1px solid rgba(12, 22, 51, 0.15);
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 18px 30px rgba(12, 22, 51, 0.15);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .card h2 {
+        font-size: 1.25rem;
+      }
+
+      .card p {
         color: rgba(11, 16, 32, 0.65);
+        font-size: 0.95rem;
       }
 
-      @media (min-width: 600px) {
-        .wrap {
-          height: 100vh;
-        }
+      .card a {
+        margin-top: auto;
+        text-decoration: none;
+        font-weight: 700;
+        color: #0c1633;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      footer {
+        font-size: 0.9rem;
+        color: rgba(11, 16, 32, 0.6);
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
+    <main class="page">
       <header>
-        <h1>Sky Hopper</h1>
-        <div class="pill" id="score">Score 0 · Best 0 · v3</div>
+        <div class="badge">Welcome to the Penguin Hub</div>
+        <div class="badge">Updated for 2024+</div>
       </header>
 
-      <section class="game-panel" aria-label="Sky Hopper game">
-        <canvas id="game" width="360" height="520"></canvas>
-        <div class="overlay" id="overlay">
-          <div>
-            <h2>Hop higher!</h2>
-            <p>Tap Start, then tilt your iPad or use the on-screen buttons to bounce on platforms.</p>
-            <p class="hint" id="motion-hint">We will ask for motion access the first time you play.</p>
-            <button id="start">Start game</button>
-          </div>
+      <section class="hero">
+        <h1>Your landing spot for games, celebrations, and everything to come.</h1>
+        <p>
+          Pick where you want to go next. The home page now routes you to the penguin-powered
+          game and the Armand countdown page you asked for.
+        </p>
+        <div class="cta-row">
+          <a class="cta" href="./game.html">Play the Penguin Jump game</a>
+          <a class="cta secondary" href="./armand.html">See the Armand countdown</a>
         </div>
       </section>
 
-      <div class="controls" aria-label="Movement controls">
-        <button class="control-btn" id="left">⬅︎ Hold Left</button>
-        <button class="control-btn" id="right">Hold Right</button>
-      </div>
+      <section class="grid" aria-label="Main destinations">
+        <article class="card">
+          <h2>Penguin Jump</h2>
+          <p>Hop between icy platforms, chase your high score, and meet the new penguin hero.</p>
+          <a href="./game.html">Open the game →</a>
+        </article>
+        <article class="card">
+          <h2>Armand Page</h2>
+          <p>Live countdown to January 16th, refreshed every year with days and hours remaining.</p>
+          <a href="./armand.html">Open the countdown →</a>
+        </article>
+        <article class="card">
+          <h2>More pages soon</h2>
+          <p>New sections will appear here as you request them. The layout is ready to scale.</p>
+          <a href="#">Stay tuned →</a>
+        </article>
+      </section>
 
-      <p class="meta">Add to Home Screen for the full-screen PWA experience.</p>
-    </div>
-
-    <script>
-      const canvas = document.getElementById("game");
-      const ctx = canvas.getContext("2d");
-      const scoreEl = document.getElementById("score");
-      const overlay = document.getElementById("overlay");
-      const startBtn = document.getElementById("start");
-      const leftBtn = document.getElementById("left");
-      const rightBtn = document.getElementById("right");
-      const motionHint = document.getElementById("motion-hint");
-
-      const state = {
-        width: canvas.width,
-        height: canvas.height,
-        player: { x: 0, y: 0, w: 32, h: 38, vx: 0, vy: 0 },
-        platforms: [],
-        gravity: 0.35,
-        jump: -8.5,
-        speed: 3.4,
-        score: 0,
-        best: 0,
-        running: false,
-        input: { left: false, right: false }
-      };
-
-      const resizeCanvas = () => {
-        const panel = canvas.parentElement.getBoundingClientRect();
-        const ratio = window.devicePixelRatio || 1;
-        canvas.width = panel.width * ratio;
-        canvas.height = panel.height * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        state.width = panel.width;
-        state.height = panel.height;
-      };
-
-      const makePlatform = (y) => {
-        const width = 80 + Math.random() * 50;
-        return {
-          x: Math.random() * (state.width - width),
-          y,
-          w: width,
-          h: 14
-        };
-      };
-
-      const resetGame = () => {
-        state.player.x = state.width / 2 - state.player.w / 2;
-        state.player.y = state.height - 90;
-        state.player.vx = 0;
-        state.player.vy = state.jump;
-        state.score = 0;
-        state.platforms = [];
-        const spacing = 90;
-        for (let y = state.height - 40; y > -state.height; y -= spacing) {
-          state.platforms.push(makePlatform(y));
-        }
-      };
-
-      const updateScore = () => {
-        scoreEl.textContent = `Score ${Math.floor(state.score)} · Best ${state.best} · v3`;
-      };
-
-      const applyInput = () => {
-        let direction = 0;
-        if (state.input.left) direction -= 1;
-        if (state.input.right) direction += 1;
-        state.player.vx = direction * state.speed;
-      };
-
-      const updatePlatforms = () => {
-        const topMost = Math.min(...state.platforms.map((p) => p.y));
-        state.platforms = state.platforms.filter((p) => p.y < state.height + 100);
-        while (state.platforms.length < 12) {
-          state.platforms.push(makePlatform(topMost - 90 - Math.random() * 20));
-        }
-      };
-
-      const update = () => {
-        applyInput();
-        const player = state.player;
-        player.vy += state.gravity;
-        player.x += player.vx;
-        player.y += player.vy;
-
-        if (player.x + player.w < 0) {
-          player.x = state.width;
-        } else if (player.x > state.width) {
-          player.x = -player.w;
-        }
-
-        if (player.vy > 0) {
-          for (const platform of state.platforms) {
-            const withinX = player.x + player.w > platform.x && player.x < platform.x + platform.w;
-            const touching = player.y + player.h >= platform.y &&
-              player.y + player.h <= platform.y + platform.h + 6;
-            if (withinX && touching) {
-              player.vy = state.jump;
-              break;
-            }
-          }
-        }
-
-        const cameraLine = state.height * 0.38;
-        if (player.y < cameraLine) {
-          const diff = cameraLine - player.y;
-          player.y = cameraLine;
-          state.platforms.forEach((platform) => {
-            platform.y += diff;
-          });
-          state.score += diff;
-        }
-
-        updatePlatforms();
-
-        if (player.y > state.height + 60) {
-          state.running = false;
-          state.best = Math.max(state.best, Math.floor(state.score));
-          overlay.classList.remove("hidden");
-          updateScore();
-        }
-      };
-
-      const draw = () => {
-        ctx.clearRect(0, 0, state.width, state.height);
-
-        ctx.fillStyle = "rgba(255,255,255,0.65)";
-        ctx.fillRect(0, 0, state.width, state.height);
-
-        ctx.fillStyle = "#6ecb63";
-        for (const platform of state.platforms) {
-          ctx.fillRect(platform.x, platform.y, platform.w, platform.h);
-        }
-
-        const player = state.player;
-        ctx.fillStyle = "#1b1f3b";
-        ctx.fillRect(player.x, player.y, player.w, player.h);
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(player.x + 6, player.y + 12, 6, 6);
-        ctx.fillRect(player.x + player.w - 12, player.y + 12, 6, 6);
-      };
-
-      const loop = () => {
-        if (state.running) {
-          update();
-          draw();
-        }
-        requestAnimationFrame(loop);
-      };
-
-      const enableMotionControls = async () => {
-        if (!("DeviceOrientationEvent" in window)) {
-          motionHint.textContent = "Motion controls are not supported on this device.";
-          return;
-        }
-
-        if (typeof DeviceOrientationEvent.requestPermission === "function") {
-          try {
-            const result = await DeviceOrientationEvent.requestPermission();
-            if (result !== "granted") {
-              motionHint.textContent = "Motion access denied. Use on-screen buttons instead.";
-            } else {
-              motionHint.textContent = "Tilt control enabled. Keep the device steady!";
-            }
-          } catch (error) {
-            motionHint.textContent = "Motion access unavailable. Use on-screen buttons instead.";
-          }
-        } else {
-          motionHint.textContent = "Tilt control enabled. Keep the device steady!";
-        }
-      };
-
-      const startGame = async () => {
-        resizeCanvas();
-        resetGame();
-        updateScore();
-        overlay.classList.add("hidden");
-        state.running = true;
-        await enableMotionControls();
-      };
-
-      const registerControls = () => {
-        const setInput = (side, active) => {
-          state.input[side] = active;
-        };
-
-        leftBtn.addEventListener("pointerdown", () => setInput("left", true));
-        leftBtn.addEventListener("pointerup", () => setInput("left", false));
-        leftBtn.addEventListener("pointerleave", () => setInput("left", false));
-        rightBtn.addEventListener("pointerdown", () => setInput("right", true));
-        rightBtn.addEventListener("pointerup", () => setInput("right", false));
-        rightBtn.addEventListener("pointerleave", () => setInput("right", false));
-
-        window.addEventListener("deviceorientation", (event) => {
-          if (!state.running) return;
-          const gamma = Math.max(-25, Math.min(25, event.gamma || 0));
-          state.input.left = gamma < -6;
-          state.input.right = gamma > 6;
-        });
-
-        window.addEventListener("keydown", (event) => {
-          if (event.key === "ArrowLeft") setInput("left", true);
-          if (event.key === "ArrowRight") setInput("right", true);
-        });
-        window.addEventListener("keyup", (event) => {
-          if (event.key === "ArrowLeft") setInput("left", false);
-          if (event.key === "ArrowRight") setInput("right", false);
-        });
-      };
-
-      startBtn.addEventListener("click", startGame);
-      window.addEventListener("resize", resizeCanvas);
-
-      registerControls();
-      resizeCanvas();
-      resetGame();
-      updateScore();
-      draw();
-      loop();
-
-      window.addEventListener(
-        "dblclick",
-        (event) => {
-          event.preventDefault();
-        },
-        { passive: false }
-      );
-
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js");
-        });
-      }
-    </script>
+      <footer>Everything here stays client-side and safe, with no data collection.</footer>
+    </main>
   </body>
 </html>
