@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#0b1d3a">
+    <meta name="theme-color" content="#0c1630">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Penguin Jump">
@@ -22,8 +22,8 @@
       }
 
       body {
-        background: radial-gradient(circle at top, #f7fbff 0%, #e3f1ff 35%, #b8d9f6 60%, #6aa6e1 100%);
-        color: #071022;
+        background: radial-gradient(circle at top, #f6fbff 0%, #dfefff 35%, #9ec4f6 62%, #4b6da7 100%);
+        color: #0b1120;
         min-height: 100vh;
         display: flex;
         align-items: stretch;
@@ -38,7 +38,7 @@
       .wrap {
         display: grid;
         grid-template-rows: auto 1fr auto auto;
-        width: min(100%, 600px);
+        width: min(100%, 720px);
         height: 100vh;
         padding: 18px 18px 24px;
         gap: 14px;
@@ -53,7 +53,7 @@
       }
 
       h1 {
-        font-size: 1.45rem;
+        font-size: 1.5rem;
         font-weight: 800;
         letter-spacing: -0.02em;
       }
@@ -70,29 +70,30 @@
 
       .game-panel {
         position: relative;
-        background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.55));
-        border-radius: 30px;
-        box-shadow: 0 26px 55px rgba(24, 41, 87, 0.25);
+        background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.55));
+        border-radius: 34px;
+        box-shadow: 0 30px 60px rgba(12, 23, 54, 0.28);
         overflow: hidden;
         display: grid;
         place-items: center;
-        border: 1px solid rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        isolation: isolate;
       }
 
       .game-panel::before,
       .game-panel::after {
         content: "";
         position: absolute;
-        inset: -20% 0 50% 0;
-        background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.6), transparent 65%);
-        opacity: 0.7;
+        inset: -30% 0 45% 0;
+        background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.7), transparent 68%);
+        opacity: 0.65;
         pointer-events: none;
       }
 
       .game-panel::after {
         inset: 60% -30% -30% -30%;
-        background: radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.5), transparent 70%);
-        opacity: 0.6;
+        background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.6), transparent 72%);
+        opacity: 0.55;
       }
 
       canvas {
@@ -120,24 +121,45 @@
       }
 
       .hud-block {
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.68);
         border-radius: 14px;
-        padding: 6px 10px;
+        padding: 7px 12px;
         box-shadow: 0 8px 16px rgba(24, 41, 87, 0.15);
-        backdrop-filter: blur(6px);
-        min-width: 74px;
+        backdrop-filter: blur(8px);
+        min-width: 84px;
+      }
+
+      .hud-flow {
+        min-width: 110px;
+      }
+
+      .hud-bar {
+        margin-top: 6px;
+        height: 6px;
+        background: rgba(11, 19, 42, 0.1);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .hud-bar span {
+        display: block;
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #7dd8ff, #b693ff, #ff8dd0);
+        transition: width 120ms ease-out;
       }
 
       .hud-label {
         display: block;
-        font-size: 0.62rem;
+        font-size: 0.6rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: rgba(11, 16, 32, 0.6);
       }
 
       .hud-value {
-        font-size: 0.95rem;
+        font-size: 0.98rem;
         font-weight: 700;
       }
 
@@ -147,7 +169,7 @@
         border-radius: 999px;
         padding: 8px 14px;
         font-weight: 700;
-        background: rgba(11, 29, 58, 0.9);
+        background: rgba(11, 29, 58, 0.92);
         color: #fff;
         cursor: pointer;
         box-shadow: 0 8px 16px rgba(27, 31, 59, 0.2);
@@ -159,7 +181,7 @@
         display: grid;
         place-items: center;
         background: rgba(255, 255, 255, 0.78);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(14px);
         text-align: center;
         padding: 24px;
         gap: 10px;
@@ -171,7 +193,7 @@
       }
 
       .overlay h2 {
-        font-size: 1.6rem;
+        font-size: 1.7rem;
         margin-bottom: 4px;
       }
 
@@ -238,7 +260,7 @@
     <div class="wrap">
       <header>
         <h1>Penguin Jump</h1>
-        <div class="pill" id="score">Score 0 · Best 0 · v5</div>
+        <div class="pill" id="score">Score 0 · Best 0 · v7</div>
       </header>
 
       <section class="game-panel" aria-label="Penguin Jump game">
@@ -253,13 +275,18 @@
               <span class="hud-label">Streak</span>
               <span class="hud-value" id="streak">x1</span>
             </div>
+            <div class="hud-block hud-flow">
+              <span class="hud-label">Flow</span>
+              <span class="hud-value" id="flow-text">0%</span>
+              <div class="hud-bar"><span id="flow-bar"></span></div>
+            </div>
           </div>
           <button class="hud-toggle" id="sound-toggle" aria-pressed="false">🔇 Sound</button>
         </div>
         <div class="overlay" id="overlay">
           <div>
-            <h2>Slide, hop, and soar!</h2>
-            <p>Chain jumps, hit the spring pads, and ride the aurora.</p>
+            <h2>Glide the aurora highway</h2>
+            <p>Ride spring pads, stack streaks, and surf the lights.</p>
             <p class="hint" id="motion-hint">We will ask for motion access the first time you play.</p>
             <button id="start">Start game</button>
           </div>
@@ -287,6 +314,8 @@
       const motionHint = document.getElementById("motion-hint");
       const altitudeEl = document.getElementById("altitude");
       const streakEl = document.getElementById("streak");
+      const flowTextEl = document.getElementById("flow-text");
+      const flowBarEl = document.getElementById("flow-bar");
       const soundToggle = document.getElementById("sound-toggle");
 
       const rand = (min, max) => min + Math.random() * (max - min);
@@ -295,20 +324,22 @@
       const state = {
         width: canvas.width,
         height: canvas.height,
-        player: { x: 0, y: 0, w: 36, h: 44, vx: 0, vy: 0, wobble: 0 },
+        player: { x: 0, y: 0, w: 36, h: 46, vx: 0, vy: 0, wobble: 0, glow: 0 },
         platforms: [],
         gravity: 0.33,
-        jump: -8.8,
-        speed: 3.6,
+        jump: -8.6,
+        speed: 3.8,
         score: 0,
         best: 0,
         running: false,
-        input: { left: false, right: false },
-        effects: { sparks: [], trails: [] },
-        background: { stars: [], clouds: [], snow: [], time: 0 },
+        input: { left: false, right: false, pointer: null },
+        effects: { sparks: [], trails: [], rings: [] },
+        background: { stars: [], clouds: [], snow: [], comets: [], time: 0 },
         combo: 1,
         soundOn: false,
-        audio: null
+        audio: null,
+        shake: 0,
+        themeHue: 210
       };
 
       const resizeCanvas = () => {
@@ -326,54 +357,56 @@
         const stars = [];
         const clouds = [];
         const snow = [];
-        const starCount = Math.floor(state.width * 0.16);
+        const starCount = Math.floor(state.width * 0.18);
         for (let i = 0; i < starCount; i += 1) {
           stars.push({
             x: Math.random() * state.width,
             y: Math.random() * state.height,
-            r: rand(0.6, 1.6),
-            a: rand(0.3, 0.9),
-            tw: rand(0.002, 0.01)
+            r: rand(0.6, 1.9),
+            a: rand(0.25, 0.9),
+            tw: rand(0.002, 0.012),
+            depth: rand(0.4, 1.2)
           });
         }
-        for (let i = 0; i < 6; i += 1) {
+        for (let i = 0; i < 7; i += 1) {
           clouds.push({
-            x: rand(-40, state.width),
-            y: rand(20, state.height * 0.7),
-            w: rand(80, 140),
-            h: rand(24, 48),
-            speed: rand(0.08, 0.18),
-            alpha: rand(0.2, 0.5)
+            x: rand(-80, state.width),
+            y: rand(40, state.height * 0.7),
+            w: rand(110, 200),
+            h: rand(26, 52),
+            speed: rand(0.08, 0.24),
+            alpha: rand(0.14, 0.4)
           });
         }
-        const snowCount = Math.floor(state.width * 0.45);
+        const snowCount = Math.floor(state.width * 0.5);
         for (let i = 0; i < snowCount; i += 1) {
           snow.push({
             x: Math.random() * state.width,
             y: Math.random() * state.height,
-            r: rand(0.6, 2.2),
-            v: rand(0.4, 1.3),
-            drift: rand(-0.2, 0.2)
+            r: rand(0.6, 2.4),
+            v: rand(0.4, 1.5),
+            drift: rand(-0.25, 0.25)
           });
         }
-        state.background = { stars, clouds, snow, time: 0 };
+        state.background = { stars, clouds, snow, comets: [], time: 0 };
       };
 
       const makePlatform = (y) => {
-        const width = rand(86, 140);
+        const width = rand(90, 150);
         const typeRoll = Math.random();
         let type = "ice";
         if (typeRoll > 0.78) type = "spring";
         if (typeRoll > 0.9) type = "boost";
-        if (typeRoll < 0.2) type = "moving";
+        if (typeRoll < 0.18) type = "moving";
         const platform = {
           x: rand(10, state.width - width - 10),
           y,
           w: width,
           h: 14,
           type,
-          dx: type === "moving" ? rand(0.3, 0.7) * (Math.random() > 0.5 ? 1 : -1) : 0,
-          range: type === "moving" ? rand(30, 70) : 0
+          dx: type === "moving" ? rand(0.35, 0.75) * (Math.random() > 0.5 ? 1 : -1) : 0,
+          range: type === "moving" ? rand(40, 90) : 0,
+          pulse: rand(0, Math.PI * 2)
         };
         platform.originX = platform.x;
         return platform;
@@ -381,13 +414,14 @@
 
       const resetGame = () => {
         state.player.x = state.width / 2 - state.player.w / 2;
-        state.player.y = state.height - 90;
+        state.player.y = state.height - 100;
         state.player.vx = 0;
         state.player.vy = state.jump;
         state.score = 0;
         state.combo = 1;
-        state.effects = { sparks: [], trails: [] };
+        state.effects = { sparks: [], trails: [], rings: [] };
         state.platforms = [];
+        state.shake = 0;
         const spacing = 90;
         for (let y = state.height - 40; y > -state.height; y -= spacing) {
           state.platforms.push(makePlatform(y));
@@ -395,9 +429,13 @@
       };
 
       const updateScore = () => {
-        scoreEl.textContent = `Score ${Math.floor(state.score)} · Best ${state.best} · v5`;
+        scoreEl.textContent = `Score ${Math.floor(state.score)} · Best ${state.best} · v7`;
         altitudeEl.textContent = `${Math.floor(state.score / 2)}m`;
         streakEl.textContent = `x${state.combo}`;
+        const flow = clamp(state.combo / 9, 0, 1);
+        const flowPercent = Math.round(flow * 100);
+        flowTextEl.textContent = `${flowPercent}%`;
+        flowBarEl.style.width = `${flowPercent}%`;
       };
 
       const applyInput = () => {
@@ -409,8 +447,8 @@
 
       const updatePlatforms = () => {
         const topMost = Math.min(...state.platforms.map((p) => p.y));
-        state.platforms = state.platforms.filter((p) => p.y < state.height + 100);
-        while (state.platforms.length < 12) {
+        state.platforms = state.platforms.filter((p) => p.y < state.height + 120);
+        while (state.platforms.length < 13) {
           state.platforms.push(makePlatform(topMost - rand(80, 110)));
         }
       };
@@ -420,12 +458,16 @@
           state.effects.sparks.push({
             x,
             y,
-            vx: rand(-1.8, 1.8),
-            vy: rand(-2.8, -0.6),
-            life: rand(18, 36),
+            vx: rand(-2.2, 2.2),
+            vy: rand(-3.2, -0.6),
+            life: rand(20, 38),
             color
           });
         }
+      };
+
+      const addRing = (x, y, color) => {
+        state.effects.rings.push({ x, y, r: 8, life: 26, color });
       };
 
       const updateEffects = () => {
@@ -439,11 +481,16 @@
         state.effects.trails.push({
           x: state.player.x + state.player.w / 2,
           y: state.player.y + state.player.h,
-          life: 12
+          life: 14
         });
         state.effects.trails = state.effects.trails.filter((trail) => {
           trail.life -= 1;
           return trail.life > 0;
+        });
+        state.effects.rings = state.effects.rings.filter((ring) => {
+          ring.r += 1.6;
+          ring.life -= 1;
+          return ring.life > 0;
         });
       };
 
@@ -453,18 +500,28 @@
           state.audio = new (window.AudioContext || window.webkitAudioContext)();
         }
         const ctxAudio = state.audio;
-        const osc = ctxAudio.createOscillator();
-        const gain = ctxAudio.createGain();
         const now = ctxAudio.currentTime;
-        const tone = type === "boost" ? 660 : type === "spring" ? 540 : 420;
+        const osc = ctxAudio.createOscillator();
+        const sub = ctxAudio.createOscillator();
+        const filter = ctxAudio.createBiquadFilter();
+        const gain = ctxAudio.createGain();
+        const tone = type === "boost" ? 720 : type === "spring" ? 560 : 440;
         osc.frequency.value = tone;
         osc.type = "triangle";
+        sub.frequency.value = tone / 2;
+        sub.type = "sine";
+        filter.type = "lowpass";
+        filter.frequency.value = 1400;
         gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
-        osc.connect(gain).connect(ctxAudio.destination);
+        gain.gain.exponentialRampToValueAtTime(0.2, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+        osc.connect(filter);
+        sub.connect(filter);
+        filter.connect(gain).connect(ctxAudio.destination);
         osc.start(now);
-        osc.stop(now + 0.26);
+        sub.start(now);
+        osc.stop(now + 0.3);
+        sub.stop(now + 0.3);
       };
 
       const update = () => {
@@ -474,6 +531,7 @@
         player.vy += state.gravity;
         player.x += player.vx;
         player.y += player.vy;
+        player.glow = Math.max(0, player.glow - 0.08);
 
         if (player.x + player.w < 0) {
           player.x = state.width;
@@ -482,6 +540,7 @@
         }
 
         state.platforms.forEach((platform) => {
+          platform.pulse += 0.04;
           if (platform.type === "moving") {
             platform.x += platform.dx;
             if (Math.abs(platform.x - platform.originX) > platform.range) {
@@ -493,22 +552,30 @@
         if (player.vy > 0) {
           for (const platform of state.platforms) {
             const withinX = player.x + player.w > platform.x && player.x < platform.x + platform.w;
-            const touching = player.y + player.h >= platform.y &&
+            const touching =
+              player.y + player.h >= platform.y &&
               player.y + player.h <= platform.y + platform.h + 6;
             if (withinX && touching) {
               let jumpPower = state.jump;
-              let sparkColor = "rgba(137, 209, 255, 0.8)";
+              let sparkColor = "rgba(137, 209, 255, 0.85)";
               if (platform.type === "spring") {
-                jumpPower *= 1.35;
+                jumpPower *= 1.38;
                 sparkColor = "rgba(255, 197, 99, 0.9)";
+                addRing(player.x + player.w / 2, platform.y + 4, "rgba(255, 197, 99, 0.7)");
               }
               if (platform.type === "boost") {
-                jumpPower *= 1.7;
+                jumpPower *= 1.75;
                 sparkColor = "rgba(255, 115, 179, 0.9)";
+                addRing(player.x + player.w / 2, platform.y + 4, "rgba(255, 115, 179, 0.75)");
+                state.shake = 6;
+                if ("vibrate" in navigator) {
+                  navigator.vibrate(30);
+                }
               }
               player.vy = jumpPower;
+              player.glow = 1.2;
               state.combo = clamp(state.combo + 1, 1, 9);
-              addSpark(player.x + player.w / 2, platform.y, sparkColor, 16);
+              addSpark(player.x + player.w / 2, platform.y, sparkColor, 18);
               playSound(platform.type);
               break;
             }
@@ -535,6 +602,7 @@
         updateEffects();
 
         state.background.time += 1;
+        state.themeHue = 210 + Math.sin(state.background.time * 0.008) * 20 + state.score * 0.01;
         state.background.stars.forEach((star) => {
           star.a += Math.sin(state.background.time * star.tw) * 0.002;
         });
@@ -553,6 +621,24 @@
             cloud.y = rand(20, state.height * 0.7);
           }
         });
+
+        if (Math.random() < 0.02) {
+          state.background.comets.push({
+            x: rand(-40, state.width * 0.8),
+            y: rand(0, state.height * 0.35),
+            vx: rand(2.6, 4.4),
+            vy: rand(1.6, 2.4),
+            life: rand(40, 60)
+          });
+        }
+        state.background.comets = state.background.comets.filter((comet) => {
+          comet.x += comet.vx;
+          comet.y += comet.vy;
+          comet.life -= 1;
+          return comet.life > 0;
+        });
+
+        state.shake = Math.max(0, state.shake - 0.3);
 
         if (player.y > state.height + 60) {
           state.running = false;
@@ -583,13 +669,21 @@
         ctx.rotate(wobble * 0.02);
         ctx.translate(-centerX, -centerY);
 
+        const glow = ctx.createRadialGradient(centerX, centerY, 6, centerX, centerY, 40);
+        glow.addColorStop(0, `rgba(116, 207, 255, ${0.35 * state.player.glow})`);
+        glow.addColorStop(1, "rgba(116, 207, 255, 0)");
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 40, 0, Math.PI * 2);
+        ctx.fill();
+
         ctx.fillStyle = "rgba(7, 18, 38, 0.4)";
         ctx.beginPath();
-        ctx.ellipse(centerX, y + h + 6, w * 0.4, h * 0.15, 0, 0, Math.PI * 2);
+        ctx.ellipse(centerX, y + h + 6, w * 0.42, h * 0.15, 0, 0, Math.PI * 2);
         ctx.fill();
 
         const bodyGradient = ctx.createLinearGradient(x, y, x, y + h);
-        bodyGradient.addColorStop(0, "#172b52");
+        bodyGradient.addColorStop(0, "#1c3260");
         bodyGradient.addColorStop(1, "#050912");
         ctx.fillStyle = bodyGradient;
         ctx.beginPath();
@@ -598,7 +692,7 @@
 
         ctx.fillStyle = "#fefefe";
         ctx.beginPath();
-        ctx.ellipse(centerX, centerY + 2, w / 3.2, h / 2.3, 0, 0, Math.PI * 2);
+        ctx.ellipse(centerX, centerY + 2, w / 3.1, h / 2.3, 0, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#ffb347";
@@ -633,48 +727,81 @@
       const drawPlatform = (platform) => {
         const gradient = ctx.createLinearGradient(platform.x, platform.y, platform.x, platform.y + platform.h);
         if (platform.type === "spring") {
-          gradient.addColorStop(0, "#ffe3b0");
+          gradient.addColorStop(0, "#ffe7b8");
           gradient.addColorStop(1, "#ff9f43");
         } else if (platform.type === "boost") {
           gradient.addColorStop(0, "#ffd1ec");
           gradient.addColorStop(1, "#ff5ca6");
         } else {
-          gradient.addColorStop(0, "#b9e7ff");
+          gradient.addColorStop(0, "#c3efff");
           gradient.addColorStop(1, "#5fb0ff");
         }
         ctx.fillStyle = gradient;
         roundedRect(platform.x, platform.y, platform.w, platform.h, 8);
         ctx.fill();
+
         if (platform.type === "spring" || platform.type === "boost") {
           ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
           ctx.lineWidth = 2;
           ctx.stroke();
         }
+        if (platform.type === "boost") {
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.35 + Math.sin(platform.pulse) * 0.2})`;
+          ctx.lineWidth = 1;
+          roundedRect(platform.x + 4, platform.y + 3, platform.w - 8, platform.h - 6, 6);
+          ctx.stroke();
+        }
       };
 
       const drawBackground = () => {
+        const hue = state.themeHue % 360;
         const sky = ctx.createLinearGradient(0, 0, 0, state.height);
-        sky.addColorStop(0, "#f4fbff");
-        sky.addColorStop(0.45, "#cfe6ff");
-        sky.addColorStop(1, "#89baf5");
+        sky.addColorStop(0, `hsl(${hue}, 85%, 94%)`);
+        sky.addColorStop(0.4, `hsl(${hue + 8}, 80%, 85%)`);
+        sky.addColorStop(1, `hsl(${hue + 18}, 60%, 68%)`);
         ctx.fillStyle = sky;
         ctx.fillRect(0, 0, state.width, state.height);
 
-        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
         state.background.stars.forEach((star) => {
           ctx.globalAlpha = star.a;
+          ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
           ctx.beginPath();
           ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
           ctx.fill();
         });
         ctx.globalAlpha = 1;
 
-        const aurora = ctx.createLinearGradient(0, 0, state.width, state.height);
-        aurora.addColorStop(0, "rgba(125, 228, 255, 0.25)");
-        aurora.addColorStop(0.5, "rgba(181, 150, 255, 0.18)");
-        aurora.addColorStop(1, "rgba(255, 140, 200, 0.18)");
-        ctx.fillStyle = aurora;
-        ctx.fillRect(0, 0, state.width, state.height * 0.6);
+        ctx.save();
+        ctx.globalCompositeOperation = "screen";
+        ctx.lineWidth = 80;
+        for (let i = 0; i < 3; i += 1) {
+          const offset = state.background.time * 0.01 + i * 1.4;
+          ctx.strokeStyle = `hsla(${hue + 140 + i * 20}, 80%, 70%, 0.12)`;
+          ctx.beginPath();
+          ctx.moveTo(-40, state.height * 0.2 + i * 50);
+          for (let x = -40; x < state.width + 40; x += 40) {
+            const y = state.height * 0.22 + i * 70 + Math.sin(x * 0.02 + offset) * 30;
+            ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        const horizonY = state.height * 0.75;
+        for (let layer = 0; layer < 3; layer += 1) {
+          const layerOffset = state.background.time * (0.01 + layer * 0.005);
+          const baseY = horizonY + layer * 24;
+          ctx.fillStyle = `hsla(${hue + 190 + layer * 12}, 30%, ${45 - layer * 6}%, 0.32)`;
+          ctx.beginPath();
+          ctx.moveTo(0, state.height);
+          for (let x = 0; x <= state.width + 40; x += 40) {
+            const y = baseY + Math.sin(x * 0.02 + layerOffset) * (20 - layer * 4);
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(state.width, state.height);
+          ctx.closePath();
+          ctx.fill();
+        }
 
         state.background.clouds.forEach((cloud) => {
           ctx.fillStyle = `rgba(255, 255, 255, ${cloud.alpha})`;
@@ -689,34 +816,97 @@
           ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
           ctx.fill();
         });
+
+        state.background.comets.forEach((comet) => {
+          const gradient = ctx.createLinearGradient(
+            comet.x - comet.vx * 8,
+            comet.y - comet.vy * 8,
+            comet.x,
+            comet.y
+          );
+          gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+          gradient.addColorStop(1, "rgba(255, 255, 255, 0.7)");
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(comet.x - comet.vx * 8, comet.y - comet.vy * 8);
+          ctx.lineTo(comet.x, comet.y);
+          ctx.stroke();
+        });
       };
 
       const draw = () => {
         ctx.clearRect(0, 0, state.width, state.height);
         drawBackground();
 
-        ctx.shadowColor = "rgba(60, 110, 170, 0.25)";
-        ctx.shadowBlur = 10;
+        const flowIntensity = clamp((state.combo - 1) / 8, 0, 1);
+        if (flowIntensity > 0) {
+          const flowGlow = ctx.createRadialGradient(
+            state.width * 0.5,
+            state.height * 0.2,
+            40,
+            state.width * 0.5,
+            state.height * 0.2,
+            state.width * 0.9
+          );
+          flowGlow.addColorStop(0, `hsla(${state.themeHue + 140}, 80%, 80%, ${0.12 * flowIntensity})`);
+          flowGlow.addColorStop(1, "rgba(255, 255, 255, 0)");
+          ctx.fillStyle = flowGlow;
+          ctx.fillRect(0, 0, state.width, state.height);
+        }
+
+        const shakeX = state.shake ? rand(-state.shake, state.shake) : 0;
+        const shakeY = state.shake ? rand(-state.shake, state.shake) : 0;
+        ctx.save();
+        ctx.translate(shakeX, shakeY);
+
+        ctx.shadowColor = "rgba(60, 110, 170, 0.3)";
+        ctx.shadowBlur = 12;
         state.platforms.forEach((platform) => drawPlatform(platform));
         ctx.shadowBlur = 0;
 
         state.effects.trails.forEach((trail) => {
-          ctx.fillStyle = `rgba(255, 255, 255, ${trail.life / 14})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${trail.life / 16})`;
           ctx.beginPath();
           ctx.arc(trail.x, trail.y, 6, 0, Math.PI * 2);
           ctx.fill();
         });
 
+        state.effects.rings.forEach((ring) => {
+          ctx.strokeStyle = ring.color;
+          ctx.globalAlpha = ring.life / 26;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2);
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+
         drawPenguin(state.player.x, state.player.y, state.player.w, state.player.h);
 
         state.effects.sparks.forEach((spark) => {
           ctx.fillStyle = spark.color;
-          ctx.globalAlpha = spark.life / 36;
+          ctx.globalAlpha = spark.life / 38;
           ctx.beginPath();
-          ctx.arc(spark.x, spark.y, 2.4, 0, Math.PI * 2);
+          ctx.arc(spark.x, spark.y, 2.5, 0, Math.PI * 2);
           ctx.fill();
         });
         ctx.globalAlpha = 1;
+
+        const spotlight = ctx.createRadialGradient(
+          state.player.x + state.player.w / 2,
+          state.player.y + state.player.h / 2,
+          30,
+          state.player.x + state.player.w / 2,
+          state.player.y + state.player.h / 2,
+          160
+        );
+        spotlight.addColorStop(0, "rgba(255, 255, 255, 0.0)");
+        spotlight.addColorStop(1, "rgba(11, 19, 42, 0.12)");
+        ctx.fillStyle = spotlight;
+        ctx.fillRect(0, 0, state.width, state.height);
+
+        ctx.restore();
       };
 
       const loop = () => {
@@ -770,6 +960,26 @@
         rightBtn.addEventListener("pointerdown", () => setInput("right", true));
         rightBtn.addEventListener("pointerup", () => setInput("right", false));
         rightBtn.addEventListener("pointerleave", () => setInput("right", false));
+
+        canvas.addEventListener("pointerdown", (event) => {
+          state.input.pointer = event.clientX;
+        });
+        canvas.addEventListener("pointermove", (event) => {
+          if (state.input.pointer === null) return;
+          const offset = event.clientX - state.input.pointer;
+          state.input.left = offset < -12;
+          state.input.right = offset > 12;
+        });
+        canvas.addEventListener("pointerup", () => {
+          state.input.pointer = null;
+          state.input.left = false;
+          state.input.right = false;
+        });
+        canvas.addEventListener("pointerleave", () => {
+          state.input.pointer = null;
+          state.input.left = false;
+          state.input.right = false;
+        });
 
         window.addEventListener("deviceorientation", (event) => {
           if (!state.running) return;
