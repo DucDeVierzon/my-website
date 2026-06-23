@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#0c1630">
+    <meta name="theme-color" content="#ff6b9d">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Penguin Jump">
@@ -22,8 +22,8 @@
       }
 
       body {
-        background: radial-gradient(circle at top, #f6fbff 0%, #dfefff 35%, #9ec4f6 62%, #4b6da7 100%);
-        color: #0b1120;
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 30%, #fbc2eb 60%, #a6c1ee 100%);
+        color: #1a1a2e;
         min-height: 100vh;
         display: flex;
         align-items: stretch;
@@ -56,6 +56,7 @@
         font-size: 1.5rem;
         font-weight: 800;
         letter-spacing: -0.02em;
+        color: #ff6b9d;
       }
 
       .pill {
@@ -64,19 +65,21 @@
         border-radius: 999px;
         font-size: 0.85rem;
         font-weight: 700;
-        box-shadow: 0 10px 20px rgba(24, 41, 87, 0.18);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
         backdrop-filter: blur(8px);
+        border: 2px solid #ffd93d;
       }
 
       .game-panel {
         position: relative;
-        background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.55));
+        background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65));
         border-radius: 34px;
-        box-shadow: 0 30px 60px rgba(12, 23, 54, 0.28);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
         overflow: hidden;
         display: grid;
         place-items: center;
-        border: 1px solid rgba(255, 255, 255, 0.75);
+        border: 2px solid;
+        border-image: linear-gradient(135deg, #ff6b9d, #feca57, #48dbfb, #ff9ff3) 1;
         isolation: isolate;
       }
 
@@ -85,14 +88,14 @@
         content: "";
         position: absolute;
         inset: -30% 0 45% 0;
-        background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.7), transparent 68%);
+        background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.8), transparent 68%);
         opacity: 0.65;
         pointer-events: none;
       }
 
       .game-panel::after {
         inset: 60% -30% -30% -30%;
-        background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.6), transparent 72%);
+        background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.7), transparent 72%);
         opacity: 0.55;
       }
 
@@ -121,12 +124,13 @@
       }
 
       .hud-block {
-        background: rgba(255, 255, 255, 0.68);
+        background: rgba(255, 255, 255, 0.75);
         border-radius: 14px;
         padding: 7px 12px;
-        box-shadow: 0 8px 16px rgba(24, 41, 87, 0.15);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         backdrop-filter: blur(8px);
         min-width: 84px;
+        border: 1px solid rgba(255, 107, 157, 0.2);
       }
 
       .hud-flow {
@@ -136,7 +140,7 @@
       .hud-bar {
         margin-top: 6px;
         height: 6px;
-        background: rgba(11, 19, 42, 0.1);
+        background: rgba(26, 26, 46, 0.15);
         border-radius: 999px;
         overflow: hidden;
       }
@@ -146,7 +150,7 @@
         height: 100%;
         width: 0%;
         border-radius: inherit;
-        background: linear-gradient(90deg, #7dd8ff, #b693ff, #ff8dd0);
+        background: linear-gradient(90deg, #ff6b9d, #feca57, #48dbfb, #ff9ff3);
         transition: width 120ms ease-out;
       }
 
@@ -155,12 +159,13 @@
         font-size: 0.6rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: rgba(11, 16, 32, 0.6);
+        color: rgba(26, 26, 46, 0.65);
       }
 
       .hud-value {
         font-size: 0.98rem;
         font-weight: 700;
+        color: #1a1a2e;
       }
 
       .hud-toggle {
@@ -169,10 +174,10 @@
         border-radius: 999px;
         padding: 8px 14px;
         font-weight: 700;
-        background: rgba(11, 29, 58, 0.92);
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
         color: #fff;
         cursor: pointer;
-        box-shadow: 0 8px 16px rgba(27, 31, 59, 0.2);
+        box-shadow: 0 8px 16px rgba(255, 107, 157, 0.3);
       }
 
       .overlay {
@@ -180,7 +185,7 @@
         inset: 0;
         display: grid;
         place-items: center;
-        background: rgba(255, 255, 255, 0.78);
+        background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(14px);
         text-align: center;
         padding: 24px;
@@ -195,12 +200,13 @@
       .overlay h2 {
         font-size: 1.7rem;
         margin-bottom: 4px;
+        color: #ff6b9d;
       }
 
       .overlay p {
         font-size: 0.95rem;
         margin-bottom: 8px;
-        color: rgba(11, 16, 32, 0.75);
+        color: rgba(26, 26, 46, 0.75);
       }
 
       button {
@@ -208,17 +214,22 @@
         border-radius: 999px;
         padding: 12px 22px;
         font-weight: 700;
-        background: #0b1d3a;
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
         color: white;
         cursor: pointer;
-        box-shadow: 0 12px 22px rgba(27, 31, 59, 0.2);
+        box-shadow: 0 12px 22px rgba(255, 107, 157, 0.3);
         touch-action: manipulation;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 28px rgba(255, 107, 157, 0.4);
       }
 
       .hint {
         font-size: 0.85rem;
         font-weight: 600;
-        color: rgba(11, 16, 32, 0.65);
+        color: rgba(26, 26, 46, 0.7);
       }
 
       .controls {
@@ -229,23 +240,28 @@
 
       .control-btn {
         flex: 1;
-        background: rgba(255, 255, 255, 0.85);
-        color: #0b1d3a;
+        background: rgba(255, 255, 255, 0.9);
+        color: #1a1a2e;
         border-radius: 18px;
         padding: 14px 0;
         font-weight: 700;
-        border: 1px solid rgba(27, 31, 59, 0.1);
-        box-shadow: 0 12px 22px rgba(24, 41, 87, 0.15);
+        border: 2px solid #ffd93d;
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.15);
+      }
+
+      .control-btn:active {
+        background: rgba(255, 217, 61, 0.2);
+        transform: scale(0.98);
       }
 
       .meta {
         font-size: 0.82rem;
         text-align: center;
-        color: rgba(11, 16, 32, 0.65);
+        color: rgba(26, 26, 46, 0.7);
       }
 
       .meta a {
-        color: inherit;
+        color: #ff6b9d;
         font-weight: 600;
       }
 
@@ -255,6 +271,7 @@
         }
       }
     </style>
+  </head>
   </head>
   <body>
     <div class="wrap">

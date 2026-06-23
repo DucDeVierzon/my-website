@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0b061a">
+    <meta name="theme-color" content="#ff6b9d">
     <title>Bertrand's Page</title>
     <style>
       :root {
@@ -19,10 +19,8 @@
 
       body {
         min-height: 100vh;
-        background: radial-gradient(circle at top, rgba(64, 248, 255, 0.2), transparent 55%),
-          radial-gradient(circle at 20% 20%, rgba(255, 64, 214, 0.2), transparent 50%),
-          #0b061a;
-        color: #f5f4ff;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #0e4b88 100%);
+        color: #f8f9fa;
         display: flex;
         justify-content: center;
         padding: 32px 20px 60px;
@@ -49,20 +47,22 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        background: linear-gradient(120deg, #40f8ff, #ff40d6);
-        color: #0b061a;
-        box-shadow: 0 0 20px rgba(64, 248, 255, 0.6);
+        background: linear-gradient(120deg, #ff6b9d, #feca57, #48dbfb, #ff9ff3);
+        color: #1a1a2e;
+        box-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
         animation: pulse 2.8s ease-in-out infinite;
+        border: 2px solid #fff;
       }
 
       .glow-title {
         font-size: clamp(2.4rem, 4vw, 3.6rem);
-        text-shadow: 0 0 18px rgba(64, 248, 255, 0.6), 0 0 28px rgba(255, 64, 214, 0.35);
+        text-shadow: 0 0 18px rgba(255, 107, 157, 0.6), 0 0 28px rgba(254, 202, 87, 0.4), 0 0 40px rgba(72, 219, 251, 0.3);
+        color: #fff;
       }
 
       .subtitle {
         max-width: 700px;
-        color: rgba(245, 244, 255, 0.75);
+        color: rgba(248, 249, 250, 0.85);
         font-size: 1.05rem;
       }
 
@@ -76,8 +76,8 @@
         position: absolute;
         inset: -10px;
         border-radius: 999px;
-        border: 1px solid rgba(64, 248, 255, 0.3);
-        box-shadow: 0 0 20px rgba(64, 248, 255, 0.25);
+        border: 2px solid rgba(255, 107, 157, 0.4);
+        box-shadow: 0 0 20px rgba(255, 107, 157, 0.35);
         animation: orbit 6s linear infinite;
       }
 
@@ -88,18 +88,20 @@
       }
 
       .panel {
-        background: rgba(16, 10, 33, 0.8);
-        border: 1px solid rgba(64, 248, 255, 0.2);
+        background: rgba(26, 26, 46, 0.85);
+        border: 2px solid;
+        border-image: linear-gradient(135deg, #ff6b9d, #feca57, #48dbfb, #ff9ff3) 1;
         border-radius: 20px;
         padding: 20px;
-        box-shadow: 0 0 30px rgba(64, 248, 255, 0.12);
+        box-shadow: 0 0 30px rgba(255, 107, 157, 0.2);
         backdrop-filter: blur(6px);
       }
 
       .panel h2 {
         font-size: 1.2rem;
         margin-bottom: 12px;
-        color: #40f8ff;
+        color: #ff6b9d;
+        text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
       }
 
       .fact-list {
@@ -110,8 +112,8 @@
       .fact {
         padding: 14px;
         border-radius: 16px;
-        background: linear-gradient(140deg, rgba(64, 248, 255, 0.12), rgba(255, 64, 214, 0.12));
-        border: 1px solid rgba(255, 64, 214, 0.15);
+        background: linear-gradient(140deg, rgba(255, 107, 157, 0.15), rgba(254, 202, 87, 0.15), rgba(72, 219, 251, 0.15));
+        border: 1px solid rgba(255, 107, 157, 0.3);
         animation: float 5s ease-in-out infinite;
       }
 
@@ -119,14 +121,18 @@
         animation-delay: 0.8s;
       }
 
+      .fact:nth-child(3n) {
+        animation-delay: 1.6s;
+      }
+
       .fact h3 {
         font-size: 1rem;
         margin-bottom: 6px;
-        color: #f5f4ff;
+        color: #f8f9fa;
       }
 
       .fact p {
-        color: rgba(245, 244, 255, 0.7);
+        color: rgba(248, 249, 250, 0.8);
         font-size: 0.95rem;
       }
 
@@ -142,16 +148,18 @@
         gap: 12px;
         padding: 14px 16px;
         border-radius: 14px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(64, 248, 255, 0.18);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 107, 157, 0.4);
         text-decoration: none;
-        color: #f5f4ff;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        color: #f8f9fa;
+        transition: all 0.3s ease;
       }
 
       .link-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 0 20px rgba(255, 64, 214, 0.3);
+        transform: translateY(-4px) translateX(4px);
+        box-shadow: 0 0 25px rgba(255, 107, 157, 0.4);
+        border-color: rgba(255, 107, 157, 0.8);
+        background: rgba(255, 107, 157, 0.1);
       }
 
       .link-card span {
@@ -167,28 +175,29 @@
       .chip {
         padding: 8px 14px;
         border-radius: 999px;
-        background: rgba(64, 248, 255, 0.15);
-        border: 1px solid rgba(255, 64, 214, 0.3);
+        background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(254, 202, 87, 0.2));
+        border: 1px solid rgba(255, 107, 157, 0.5);
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         animation: pulse 3s ease-in-out infinite;
+        color: #fff;
       }
 
       .note {
         font-size: 0.9rem;
-        color: rgba(245, 244, 255, 0.6);
+        color: rgba(248, 249, 250, 0.7);
       }
 
       @keyframes pulse {
         0%,
         100% {
           transform: scale(1);
-          box-shadow: 0 0 14px rgba(255, 64, 214, 0.4);
+          box-shadow: 0 0 14px rgba(255, 107, 157, 0.4);
         }
         50% {
           transform: scale(1.04);
-          box-shadow: 0 0 22px rgba(64, 248, 255, 0.55);
+          box-shadow: 0 0 22px rgba(255, 107, 157, 0.65);
         }
       }
 
@@ -220,32 +229,33 @@
           <span class="chip">Neon vibes</span>
           <span class="chip">Disco funk</span>
           <span class="chip">Synth waves</span>
+          <span class="chip">Party time</span>
         </div>
       </header>
 
       <section>
         <h1 class="glow-title"><span class="sparkle">Bertrand's Page</span> : faits, liens &amp; groove cosmique</h1>
         <p class="subtitle">
-          Une mini-escale néon pour les fans de Daft Punk et pour un personnage fictif nommé David Blow,
-          imaginé ici pour l'ambiance disco-funk.
+          Une mini-escale non pour les fans de Daft Punk et pour un personnage fictif nomme David Blow,
+          imagine ici pour l'ambiance disco-funk.
         </p>
       </section>
 
-      <section class="layout" aria-label="Faits et liens en parallèle">
+      <section class="layout" aria-label="Faits et liens en parallle">
         <div class="panel">
-          <h2>Faits très intéressants sur Daft Punk</h2>
+          <h2>Faits trs intressants sur Daft Punk</h2>
           <div class="fact-list">
             <article class="fact">
-              <h3>Casques emblématiques</h3>
-              <p>Le duo est connu pour ses casques futuristes qui ont défini leur identité visuelle.</p>
+              <h3>Casques emblmatiques</h3>
+              <p>Le duo est connu pour ses casques futuristes qui ont dfini leur identit visuelle.</p>
             </article>
             <article class="fact">
               <h3>Studio avant tout</h3>
-              <p>Leur musique repose sur une obsession du détail, avec des sessions studio ultra minutieuses.</p>
+              <p>Leur musique repose sur une obsession du dtail, avec des sessions studio ultra minutieuses.</p>
             </article>
             <article class="fact">
               <h3>Culture dance et funk</h3>
-              <p>Ils ont popularisé un mélange de house, disco et funk moderne pour le grand public.</p>
+              <p>Ils ont popularis un mlange de house, disco et funk moderne pour le grand public.</p>
             </article>
           </div>
         </div>
@@ -255,15 +265,15 @@
           <div class="link-grid">
             <a class="link-card" href="https://www.daftpunk.com" target="_blank" rel="noreferrer">
               <span>Site officiel</span>
-              <span>↗</span>
+              <span></span>
             </a>
             <a class="link-card" href="https://www.discogs.com/artist/1289-Daft-Punk" target="_blank" rel="noreferrer">
               <span>Discographie (Discogs)</span>
-              <span>↗</span>
+              <span></span>
             </a>
             <a class="link-card" href="https://fr.wikipedia.org/wiki/Daft_Punk" target="_blank" rel="noreferrer">
-              <span>Page Wikipédia</span>
-              <span>↗</span>
+              <span>Page Wikipdia</span>
+              <span></span>
             </a>
           </div>
         </div>
@@ -273,15 +283,15 @@
           <div class="fact-list">
             <article class="fact">
               <h3>Personnage fictif</h3>
-              <p>David Blow est présenté ici comme une icône inventée pour ce décor disco futuriste.</p>
+              <p>David Blow est prsent ici comme une icne invente pour ce dcor disco futuriste.</p>
             </article>
             <article class="fact">
-              <h3>Sonorités synthétiques</h3>
-              <p>Dans l'imaginaire de cette page, il mixe talkbox, synthés analogiques et funk spatial.</p>
+              <h3>Sonorits synthtiques</h3>
+              <p>Dans l'imaginaire de cette page, il mixe talkbox, synths analogiques et funk spatial.</p>
             </article>
             <article class="fact">
-              <h3>Scène live flamboyante</h3>
-              <p>Un show décrivant lasers, néons et chorégraphies parfaitement synchronisées.</p>
+              <h3>Scne live flamboyante</h3>
+              <p>Un show dcrivant lasers, nons et chorgraphies parfaitement synchronises.</p>
             </article>
           </div>
         </div>
@@ -291,15 +301,15 @@
           <div class="link-grid">
             <a class="link-card" href="#sound" aria-label="Playlist imaginaire David Blow">
               <span>Playlist imaginaire</span>
-              <span>▶</span>
+              <span></span>
             </a>
-            <a class="link-card" href="#tour" aria-label="Dates fictives de tournée">
-              <span>Tournée fictive</span>
-              <span>★</span>
+            <a class="link-card" href="#tour" aria-label="Dates fictives de tourne">
+              <span>Tourne fictive</span>
+              <span></span>
             </a>
             <a class="link-card" href="#merch" aria-label="Boutique fictive">
               <span>Merch fictif</span>
-              <span>✦</span>
+              <span></span>
             </a>
           </div>
         </div>
@@ -308,9 +318,9 @@
       <section class="panel" id="sound">
         <h2>Micro-ambiances disco</h2>
         <p class="subtitle">
-          Besoin d'inspiration ? Imagine une basse funky, des arpèges néon et un public qui lévite.
+          Besoin d'inspiration ? Imagine une basse funky, des arpges non et un public qui lvite.
         </p>
-        <p class="note">Tout ici est purement créatif et pensé pour l'univers visuel demandé.</p>
+        <p class="note">Tout ici est purement creatif et pens pour l'univers visuel demand.</p>
       </section>
     </main>
   </body>
